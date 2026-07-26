@@ -36,6 +36,6 @@ export class VendorsController {
   @Post('apply')
   @UseGuards(AuthGuard)
   async apply(@CurrentUser() user: User, @Body() dto: VendorApplyDto) {
-    return this.vendorService.apply(user, dto.storeName, dto.address, dto.phone);
+    return this.vendorService.apply(user, dto);
 }
 }

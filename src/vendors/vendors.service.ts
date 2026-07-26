@@ -9,6 +9,8 @@ import { Vendor } from './entities/vendor.entity';
 import { VendorStatus } from './vendor.enums';
 import { Repository } from 'typeorm';
 import { User } from 'src/Users/user.entity';
+import { VendorApplyDto } from './dto/vendor-apply.dto';
+import { UpdateVendorDto } from './dto/update-vendor.dto';
 
 @Injectable()
 export class VendorService {
@@ -17,8 +19,8 @@ export class VendorService {
   ) {}
 
   // user applies to be vendor
-  async apply(user: User, storeName: string, address: string, phone: string) {
-    if (!storeName || !address || !phone) {
+  async apply(user: User, dto: VendorApplyDto) {
+    if (!dto.storeName|| !dto.address || !dto.phone) {
       throw new BadRequestException(
         'storeName, address, and phone are required to apply as a vendor',
       );
@@ -31,9 +33,9 @@ export class VendorService {
 
     const vendor = this.vendorRepo.create({
       user,
-      storeName,
-      address,
-      phone,
+      storeName: dto.storeName,
+      address: dto.address,
+      phone: dto.phone,
       status: VendorStatus.PENDING,
     });
 
@@ -51,7 +53,7 @@ export class VendorService {
     return vendor;
   }
 
-  async update(userId: number, dto: { storeName?: string; address?: string; phone?: string }) {
+  async update(userId: number, dto: UpdateVendorDto) {
     const vendor = await this.findByUserId(userId);
 
     Object.assign(vendor, dto);
