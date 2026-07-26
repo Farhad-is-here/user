@@ -1,0 +1,141 @@
+@baseUrl = http://localhost:3001
+
+### ================= AUTH (شامل همه‌ی کاربران) =================
+
+### Signup
+# @name signup
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "email": "brrrr@gmail.com",
+  "password": "123456",
+  "username": "OoOo"
+}
+
+###
+
+@userToken = {{signup.response.body.accessToken}}
+
+### Signin
+# @name signin
+POST {{baseUrl}}/auth/signin
+Content-Type: application/json
+
+{
+  "email": "brrrr@gmail.com",
+  "password": "123456"
+}
+
+###
+
+@token = {{signin.response.body.accessToken}}
+
+### Signout
+POST {{baseUrl}}/auth/signout
+Authorization: Bearer {{token}}
+
+
+### ================= CUSTOMER =================
+
+### Who am I
+GET {{baseUrl}}/customer/me
+Authorization: Bearer {{token}}
+
+### Get my customer profile (باید address/phone نال باشن اولش)
+GET {{baseUrl}}/customer/profile
+Authorization: Bearer {{token}}
+
+### Complete customer profile (آدرس و تلفن)
+PATCH {{baseUrl}}/customer/profile
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "address": "Tehran, some street",
+  "phone": "09123456789"
+}
+
+### Get all customers
+GET {{baseUrl}}/customer/all
+
+
+### ================= VENDOR =================
+
+### Apply as vendor (همون یوزر بالا الان درخواست فروشندگی هم می‌ده)
+# @name vendorApply
+POST {{baseUrl}}/vendor/apply
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "storeName": "supesri",
+  "address": "this is my address",
+  "phone": "02189561194"
+}
+
+### Get my store — باید 403 بده چون هنوز pending است
+GET {{baseUrl}}/vendor/me
+Authorization: Bearer {{token}}
+
+
+### ================= ADMIN =================
+
+### Admin signin
+# @name adminSignin
+POST {{baseUrl}}/admin/signin
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "change-this-strong-password"
+}
+
+###
+
+@adminToken = {{adminSignin.response.body.accessToken}}
+
+### List pending vendors
+# @name pendingVendors
+GET {{baseUrl}}/admin/vendors/pending
+Authorization: Bearer {{adminToken}}
+
+### Approve vendor (آیدی رو دستی از response بالا بردار و جایگزین کن)
+PATCH {{baseUrl}}/admin/vendors/1/approve
+Authorization: Bearer {{adminToken}}
+
+### Deny vendor (نمونه، اگه بخوای رد کنی)
+PATCH {{baseUrl}}/admin/vendors/1/deny
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "reason": "Address format is invalid"
+}
+
+
+### ================= VENDOR (بعد از approve) =================
+
+### Get my store — الان باید موفق بشه، بدون نیاز به signin مجدد!
+GET {{baseUrl}}/vendor/me
+Authorization: Bearer {{token}}
+
+### Update my store
+PATCH {{baseUrl}}/vendor/me
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "storeName": "supesri updated"
+}
+
+
+### ================= NEGATIVE TESTS =================
+
+### Who am i — no token (should 401)
+GET {{baseUrl}}/customer/me
+
+### Vendor route without approved vendor profile (should 403)
+# یه یوزر جدید بساز که هیچ‌وقت apply نکرده و اینو باهاش تست کن
+GET {{baseUrl}}/vendor/me
+Authorization: Bearer {{token}}
