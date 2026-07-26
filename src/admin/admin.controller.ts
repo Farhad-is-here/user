@@ -7,7 +7,11 @@ import { AdminSigninDto } from './dtos/admin-signin.dto';
 import { DenyVendorDto } from './dtos/deny-vendor.dto';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 import { UserDto } from 'src/customer/dtos/user.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { VendorDto } from 'src/vendors/dto/vendor.dto';
 
+
+@ApiBearerAuth()
 @Controller('admin')
 export class AdminController {
   constructor(
@@ -41,12 +45,14 @@ export class AdminController {
 
   @Get('vendors/pending')
   @UseGuards(AdminGuard)
+  @Serialize(VendorDto)
   getPendingVendors() {
     return this.vendorService.findPending();
   }
 
   @Patch('vendors/:id/approve')
   @UseGuards(AdminGuard)
+  @Serialize(VendorDto)
   approveVendor(@Param('id') id: string) {
     return this.vendorService.approve(parseInt(id));
   }
@@ -56,4 +62,7 @@ export class AdminController {
   denyVendor(@Param('id') id: string, @Body() dto: DenyVendorDto) {
     return this.vendorService.deny(parseInt(id), dto.reason);
   }
-}
+
+
+
+    }
