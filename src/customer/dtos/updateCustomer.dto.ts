@@ -1,5 +1,7 @@
 import { IsEmail, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
+
+// update/edit customers acc
 export class UpdateCustomerDto {
   @IsString()
   @IsOptional()
