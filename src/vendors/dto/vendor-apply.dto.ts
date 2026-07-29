@@ -1,5 +1,5 @@
 import { Transform } from "class-transformer";
-import { IsString, MaxLength, MinLength } from "class-validator";
+import { IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 export class VendorApplyDto {
   @IsString()
@@ -14,4 +14,8 @@ export class VendorApplyDto {
   @IsString()
   @MaxLength(200)
   address!: string;
+
+  @IsOptional()
+  @IsString()
+  cityId?: string;
 }

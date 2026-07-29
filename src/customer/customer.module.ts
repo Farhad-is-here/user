@@ -7,9 +7,12 @@ import { UsersService } from 'src/Users/users.service';
 import { AuthService } from 'src/auth/auth.service';
 import { CustomerProfile } from './entites/customer-profile.entity';
 import { Vendor } from 'src/vendors/entities/vendor.entity';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, CustomerProfile, Vendor])],
+  imports: [
+    HttpModule,
+    TypeOrmModule.forFeature([User, CustomerProfile, Vendor])],
   controllers: [CustomerController],
   providers: [CustomerService, AuthService, UsersService],
   exports: [AuthService, UsersService],

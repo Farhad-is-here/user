@@ -16,4 +16,8 @@ export class UpdateVendorDto {
   @IsString()
   @MaxLength(200)
   address?: string;
+
+  @IsOptional()
+  @IsString()
+  cityId?: string;
 }

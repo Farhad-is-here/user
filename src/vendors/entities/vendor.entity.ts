@@ -38,6 +38,9 @@ export class Vendor {
   @Column({ nullable: true })
   denialReason?: string;
 
+  @Column({ nullable: true })
+  cityId?: string;
+
   @CreateDateColumn()
   created_at!: Date;
 

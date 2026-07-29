@@ -2,12 +2,15 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomerProfile } from './entites/customer-profile.entity';
+import { firstValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class CustomerService {
   constructor(
     @InjectRepository(CustomerProfile)
     private customerProfileRepo: Repository<CustomerProfile>,
+    private readonly http: HttpService,
   ) {}
 
   async findByUserId(userId: number) {
@@ -33,5 +36,15 @@ export class CustomerService {
   async isReadyToPurchase(userId: number){
     const profile = await this.findByUserId(userId);
     return !!profile.address && !!profile.phone;
+  }
+
+  async getAddress(userId: number) {
+    const { data } = await firstValueFrom(
+      this.http.get(
+        `http://localhost:3001/internal/users/${userId}/address`,
+      ),
+    );
+
+    return data;
   }
 }

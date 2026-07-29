@@ -36,6 +36,7 @@ export class VendorService {
       storeName: dto.storeName,
       address: dto.address,
       phone: dto.phone,
+      cityId: dto.cityId, 
       status: VendorStatus.PENDING,
     });
 

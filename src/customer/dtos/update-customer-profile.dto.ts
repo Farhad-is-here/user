@@ -8,4 +8,8 @@ export class UpdateCustomerProfileDto {
   @IsOptional()
   @IsString()
   phone?: string;
+
+  @IsOptional()
+  @IsString()
+  cityId?: string; 
 }

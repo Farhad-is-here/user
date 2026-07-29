@@ -14,6 +14,7 @@ import { AuthController } from './auth/auth.controller';
 import { UsersModule } from './Users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { CustomerProfile } from './customer/entites/customer-profile.entity';
+import { HttpModule } from '@nestjs/axios';
 
 
 @Module({
@@ -36,7 +37,8 @@ import { CustomerProfile } from './customer/entites/customer-profile.entity';
 }),
     AuthModule,
     UsersModule,
-    AdminModule
+    AdminModule,
+    HttpModule,
   ],
   controllers: [AppController, AuthController],
   providers: [AppService],

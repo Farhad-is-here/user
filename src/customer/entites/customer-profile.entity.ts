@@ -23,6 +23,9 @@ export class CustomerProfile {
 
   @Column({ nullable: true })
   phone?: string;
+  
+  @Column({ nullable: true })
+  cityId?: string;
 
   @CreateDateColumn()
   created_at!: Date;
