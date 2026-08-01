@@ -2,6 +2,9 @@
 
 ### ================= AUTH (شامل همه‌ی کاربران) =================
 
+
+GET http://localhost:3001/internal/users/2/profile
+
 ### Signup
 # @name signup
 POST {{baseUrl}}/auth/signup
