@@ -26,7 +26,7 @@ export class CustomerService {
     return profile;
   }
 
-  async updateProfile(userId: number, dto: { address?: string; phone?: string }) {
+  async updateProfile(userId: number, dto: { address?: string; phone?: string, cityId?: string }) {
     const profile = await this.findByUserId(userId);
 
     Object.assign(profile, dto);

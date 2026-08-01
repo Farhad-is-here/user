@@ -15,6 +15,7 @@ import { UsersModule } from './Users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { CustomerProfile } from './customer/entites/customer-profile.entity';
 import { HttpModule } from '@nestjs/axios';
+import { InternalModule } from './internal/internal.module';
 
 
 @Module({
@@ -38,6 +39,7 @@ import { HttpModule } from '@nestjs/axios';
     AuthModule,
     UsersModule,
     AdminModule,
+    InternalModule,
     HttpModule,
   ],
   controllers: [AppController, AuthController],
