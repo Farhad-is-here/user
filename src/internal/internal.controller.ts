@@ -1,5 +1,4 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
-import { InternalService } from './internal.service';
 import { CustomerService } from 'src/customer/customer.service';
 import { VendorService } from 'src/vendors/vendors.service';
 

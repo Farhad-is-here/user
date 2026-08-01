@@ -15,6 +15,6 @@ import { HttpModule } from '@nestjs/axios';
     TypeOrmModule.forFeature([User, CustomerProfile, Vendor])],
   controllers: [CustomerController],
   providers: [CustomerService, AuthService, UsersService],
-  exports: [AuthService, UsersService],
+  exports: [AuthService, UsersService, CustomerService],
 })
 export class CustomerModule {}
