@@ -15,6 +15,7 @@ export class AdminAuthService {
 
     return this.jwtService.sign({
       role: 'admin',
+      username
     });
   }
 }
